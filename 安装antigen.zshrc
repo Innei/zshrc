@@ -3,7 +3,7 @@ ANTIGEN="$HOME/.local/bin/antigen.zsh"
 # Install antigen.zsh if not exist
 if [ ! -f "$ANTIGEN" ]; then
 	echo "Installing antigen ... please connect the proxy"
-	export all_proxy=socks5://127.0.0.1:1086
+	#export all_proxy=socks5://127.0.0.1:1086
 	[ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
 	[ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin" 2> /dev/null
 	[ ! -f "$HOME/.z" ] && touch "$HOME/.z"
