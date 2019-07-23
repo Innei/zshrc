@@ -1,11 +1,14 @@
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
+
 # alias begin
+alias gpush='git push origin master'
+alias pip='pip3'
 alias proxy='export all_proxy=socks5://127.0.0.1:1086'
 alias bidl='annie -c ~/Desktop/cookies -n 300 -C -p '
 alias gc='git clone'
-alias mkidr='mkdir'
-#alias sayc='say -v Ting-ting'
+alias mkdir='mkdir -p'
+alias mkidr='mkdir -p'
 alias ngd='hexo clean && hexo g  && hexo d'
 alias cdhexo='cd /Users/yinys/Library/Mobile\ Documents/com~apple~CloudDocs/SorashitaInnei.github.io'
 alias mongod='mongod -dbpath ~/Sites/db'
@@ -16,7 +19,7 @@ alias sshproxy="ssh -o 'ProxyCommand=nc -X 5 -x localhost:1086 %h %p'"
 export LSCOLORS=exfxcxdxbxexexxxxxxxxx #设置ls颜色 去除背景色
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
-export PATH=/Users/yinys/Applications/mongodb-osx-x86_64-4.0.8/bin:/Users/yinys/Applications/tools/bin:/Users/yinys/Applications/tools:$PATH
+export PATH=/Users/yinys/Applications/mongodb-osx-x86_64-4.0.8/bin:/usr/local/lib/ruby/gems/2.6.0/bin:/Users/yinys/Applications/tools/bin:/Users/yinys/Applications/tools:/Users/yinys/Library/Python/3.7/bin:$PATH
 eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:
 eval $(thefuck --alias FUCK)
@@ -72,50 +75,10 @@ antigen bundle willghatch/zsh-cdr
 
 
 
-POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 antigen theme xxf
 #antigen theme bhilburn/powerlevel9k
 #ZSH_THEME="agnoster" 
 #ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-# 设置 oh-my-zsh powerlevel9k 主题左边元素显示
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND=''
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='white'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
-#POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='white'
-POWERLEVEL9K_CONTEXT_TEMPLATE=" %n"
-# 设置 oh-my-zsh powerlevel9k 主题右边元素显示
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs ssh  time)
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="➜  "
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir newline vcs)
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-# command line左边想显示的内容
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir) # <= left prompt设了"dir"
-# command line右边想显示的内容
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time) # <= right prompt设了"time"
-# 編輯 ~/.zshrc
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs) # 加上 "vcs"
-#加上"dir_writable" 
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs)
-#加上"vi_mode" 
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs vi_mode )
-#加上ram，显示目前的free memory 
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status ram time)
-#左侧
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable vcs vi_mode)
-#右侧
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history ram load time)
-#若当前登入的帐号为你的帐号xxx，就不用特别显示出来
-#DEFAULT_USER="xxx"
-# 使用 nerd font 時可以顯示更多 icon。詳情請參考 powerlevel9k wiki 
-#POWERLEVEL9K_MODE='nerdfont-complete'
-
-
-
 #syntax color definition
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
