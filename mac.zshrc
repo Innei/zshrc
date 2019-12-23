@@ -2,20 +2,30 @@
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
 # alias begin
-alias gpush='git push origin master'
 alias pip='pip3'
 alias proxy='export all_proxy=socks5://127.0.0.1:1086'
 alias bidl='annie -c ~/Desktop/cookies -n 300 -C -p '
+
 alias gc='git clone'
+alias gm='git commit -a -m'
+alias gp='git push origin master'
+alias go='git checkout'
+alias gb='git branch'
+alias gpl='git pull'
+alias gf='git fetch'
+alias gs='git stash'
+alias gr='git rebase'
+alias gt='git log --graph --oneline --all'
+
 alias mkdir='mkdir -p'
 alias mkidr='mkdir -p'
-alias ngd='hexo clean && hexo g  && hexo d'
-alias cdhexo='cd /Users/yinys/Library/Mobile\ Documents/com~apple~CloudDocs/SorashitaInnei.github.io'
-alias mongod='mongod -dbpath ~/Sites/db'
+alias mongod='mongod -dbpath ~/Sites/db &'
 alias dns8='networksetup -setdnsservers "802.11n NIC" 8.8.8.8 8.8.4.4'
 alias dns='networksetup -setdnsservers "802.11n NIC" empty'
 alias dns114='networksetup -setdnsservers "802.11n NIC" 114.114.114.114'
 alias sshproxy="ssh -o 'ProxyCommand=nc -X 5 -x localhost:1086 %h %p'"
+
+
 export LSCOLORS=exfxcxdxbxexexxxxxxxxx #设置ls颜色 去除背景色
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
