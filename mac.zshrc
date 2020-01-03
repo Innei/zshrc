@@ -2,9 +2,10 @@
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
 # alias begin
+alias c='clear'
 alias pip='pip3'
 alias proxy='export all_proxy=socks5://127.0.0.1:1086'
-alias bidl='annie -c ~/Desktop/cookies -n 300 -C -p '
+alias zvi='antigen bundle vi-mode'
 
 alias gc='git clone'
 alias gm='git commit -a -m'
@@ -23,13 +24,15 @@ alias mongod='mongod -dbpath ~/Sites/db &'
 alias dns8='networksetup -setdnsservers "802.11n NIC" 8.8.8.8 8.8.4.4'
 alias dns='networksetup -setdnsservers "802.11n NIC" empty'
 alias dns114='networksetup -setdnsservers "802.11n NIC" 114.114.114.114'
+alias dnstx='networksetup -setdnsservers "802.11n NIC" 119.29.29.29'
 alias sshproxy="ssh -o 'ProxyCommand=nc -X 5 -x localhost:1086 %h %p'"
 
 
 export LSCOLORS=exfxcxdxbxexexxxxxxxxx #设置ls颜色 去除背景色
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
-export PATH=/Users/yinys/Applications/mongodb-osx-x86_64-4.0.8/bin:/usr/local/lib/ruby/gems/2.6.0/bin:/Users/yinys/Applications/tools/bin:/Users/yinys/Applications/tools:/Users/yinys/Library/Python/3.7/bin:$PATH
+export PATH=/Users/yinys/Applications/mongodb-osx-x86_64-4.0.8/bin:/usr/local/lib/ruby/gems/2.6.0/bin:/Users/yinys/Applications/tools/bin:/Users/yinys/Applications/tools:/usr/local/opt/mysql@5.5/bin:$PATH
+
 eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:
 eval $(thefuck --alias FUCK)
@@ -62,33 +65,21 @@ antigen use oh-my-zsh
 
 # default bundles
 # visit https://github.com/unixorn/awesome-zsh-plugins
-# antigen bundle git
-# antigen bundle heroku
 antigen bundle pip
 antigen bundle svn-fast-info
-# antigen bundle command-not-find
+#antigen bundle vi-mode
 
 antigen bundle colorize
 antigen bundle github
 antigen bundle python
 antigen bundle rupa/z z.sh
-# antigen bundle z
-
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
-# antigen bundle supercrabtree/k
 antigen bundle Vifon/deer
 
 antigen bundle willghatch/zsh-cdr
-# antigen bundle zsh-users/zaw
-# command line左边想显示的内容
-
-
 
 antigen theme xxf
-#antigen theme bhilburn/powerlevel9k
-#ZSH_THEME="agnoster" 
-#ZSH_THEME="powerlevel9k/powerlevel9k"
 #syntax color definition
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -182,4 +173,4 @@ zstyle ':completion:*:complete:-command-:*:*' ignored-patterns '*.pdf|*.exe|*.dl
 zstyle ':completion:*:*sh:*:' tag-order files
 
 setopt nonomatch
-export PATH="/usr/local/opt/mysql@5.5/bin:$PATH"
+
