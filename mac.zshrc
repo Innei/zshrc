@@ -79,7 +79,7 @@ _INIT_SH_NOFUN=1
 # WSL (aka Bash for Windows) doesn't work well with BG_NICE
 #[ -d "/mnt/c" ] && [[ "$(uname -a)" == *Microsoft* ]] && unsetopt BG_NICE
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Initialize antigen
 source "$ANTIGEN"
 
