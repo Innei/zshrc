@@ -18,7 +18,7 @@ clone 此仓库，将其中一个 `.zhsrc` 改名并放入 `~`
 
 `font`文件夹下提供了我使用的等宽字体。其中` Operator Mono` 字体提供了原版，连字版以及图片扩展补丁版。效果如下图：
 
-`Operator Mono SSm Lig Book Italic Nerd Font Plus Font Awesome Plus Material Design Icons.otf`
+`Operator Mono SSm Lig Book Nerd Font Plus Font Awesome Plus Font Awesome Extension Plus Octicons Plus Power Symbols Plus Font Logos (Font Linux) Plus Material Design Icons`
 
 
 
