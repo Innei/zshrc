@@ -1,14 +1,40 @@
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
+# Install antigen.zsh if not exist
+if [ ! -f "$ANTIGEN" ]; then
+	
+	[ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
+	[ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin" 2> /dev/null
+	[ ! -f "$HOME/.z" ] && touch "$HOME/.z"
+	URL="http://git.io/antigen"
+	TMPFILE="/tmp/antigen.zsh"
+	if [ -x "$(which curl)" ]; then
+		curl -L "$URL" -o "$TMPFILE" 
+	elif [ -x "$(which wget)" ]; then
+		wget "$URL" -O "$TMPFILE" 
+	else
+		echo "ERROR: please install curl or wget before installation !!"
+		exit
+	fi
+	if [ ! $? -eq 0 ]; then
+		echo ""
+		echo "ERROR: downloading antigen.zsh ($URL) failed !!"
+		exit
+	fi;
+	echo "move $TMPFILE to $ANTIGEN"
+	mv "$TMPFILE" "$ANTIGEN"
+fi
+
 # alias begin
 alias c='clear'
+alias e='exit'
 alias pip='pip3'
 alias proxy='export all_proxy=socks5://127.0.0.1:1086'
 
 alias gc='git clone'
 alias gm='git commit -a -m'
-alias gp='git push origin master'
+alias gp='git push'
 alias gb='git branch'
 alias gpl='git pull'
 alias gf='git fetch'
@@ -29,17 +55,18 @@ alias sshproxy="ssh -o 'ProxyCommand=nc -X 5 -x localhost:1086 %h %p'"
 alias vf='nvim $(fzf)'
 alias cdt='cd $(find * -type d | fzf)'
 alias gct='git checkout $(git branch -r | fzf)'
+
 # alias end
 
 # fzf
 export FZF_DEFAULT_OPTS='--bind ctrl-e:down,ctrl-u:up --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500"'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore-dir=node_modules -g ""'
-export FZF_COMPLETION_TRIGGER=','
+export FZF_COMPLETION_TRIGGER='\'
 export FZF_TMUX_HEIGHT='80%'
 export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
 
 
-export LSCOLORS=exfxcxdxbxexexxxxxxxxx #设置ls颜色 去除背景色
+export LSCOLORS=exfxcxdxbxexexxxxxxxxx
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
 
@@ -66,7 +93,6 @@ _INIT_SH_NOFUN=1
 # WSL (aka Bash for Windows) doesn't work well with BG_NICE
 #[ -d "/mnt/c" ] && [[ "$(uname -a)" == *Microsoft* ]] && unsetopt BG_NICE
 
-source ~/.antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 # Initialize antigen
 source "$ANTIGEN"
 
@@ -85,6 +111,7 @@ antigen bundle python
 antigen bundle rupa/z z.sh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle sobolevn/wakatime-zsh-plugin
 
 antigen bundle willghatch/zsh-cdr
@@ -123,9 +150,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=none
 # load local config
 [ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
 [ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
-
-# enable syntax highlighting
-antigen bundle zsh-users/zsh-syntax-highlighting
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 antigen apply
 
@@ -192,6 +217,4 @@ _fix_cursor() {
 }
 precmd_functions+=(_fix_cursor)
 
-source ~/.zshrc.local
-source ~/.config/zsh/key-bindings.zsh
-source ~/.config/zsh/completion.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
