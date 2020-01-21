@@ -28,7 +28,6 @@ antigen bundle rupa/z z.sh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle sobolevn/wakatime-zsh-plugin
 
 antigen bundle willghatch/zsh-cdr
 
