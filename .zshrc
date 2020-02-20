@@ -1,42 +1,81 @@
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
-# alias begin
-
-
-alias gc='git clone'
-alias mkidr='mkdir'
 
 # Install antigen.zsh if not exist
 if [ ! -f "$ANTIGEN" ]; then
-	echo "Installing antigen ... please connect the proxy"
-	#export all_proxy=socks5://127.0.0.1:1086
-	[ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
-	[ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin" 2> /dev/null
-	[ ! -f "$HOME/.z" ] && touch "$HOME/.z"
-	URL="http://git.io/antigen"
-	TMPFILE="/tmp/antigen.zsh"
-	if [ -x "$(which curl)" ]; then
-		curl -L "$URL" -o "$TMPFILE" 
-	elif [ -x "$(which wget)" ]; then
-		wget "$URL" -O "$TMPFILE" 
-	else
-		echo "ERROR: please install curl or wget before installation !!"
-		exit
-	fi
-	if [ ! $? -eq 0 ]; then
-		echo ""
-		echo "ERROR: downloading antigen.zsh ($URL) failed !!"
-		exit
-	fi;
-	echo "move $TMPFILE to $ANTIGEN"
-	mv "$TMPFILE" "$ANTIGEN"
+  echo "Installing antigen ... please connect the proxy"
+  #export all_proxy=socks5://127.0.0.1:1086
+  [ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
+  [ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin" 2> /dev/null
+  [ ! -f "$HOME/.z" ] && touch "$HOME/.z"
+  URL="http://git.io/antigen"
+  TMPFILE="/tmp/antigen.zsh"
+  if [ -x "$(which curl)" ]; then
+    curl -L "$URL" -o "$TMPFILE"
+  elif [ -x "$(which wget)" ]; then
+    wget "$URL" -O "$TMPFILE"
+  else
+    echo "ERROR: please install curl or wget before installation !!"
+    exit
+  fi
+  if [ ! $? -eq 0 ]; then
+    echo ""
+    echo "ERROR: downloading antigen.zsh ($URL) failed !!"
+    exit
+  fi;
+  echo "move $TMPFILE to $ANTIGEN"
+  mv "$TMPFILE" "$ANTIGEN"
 fi
 
-export LSCOLORS=exfxcxdxbxexexxxxxxxxx #设置ls颜色 去除背景色
-export LC_ALL=en_US.UTF-8  
+# alias begin
+alias c='clear'
+alias e='exit'
+alias pip='pip3'
+alias proxy='export all_proxy=socks5://127.0.0.1:1086'
+alias pc='proxychains4 zsh'
+alias gc='git clone'
+alias gm='git commit -a -m'
+alias gp='git push'
+alias gb='git branch'
+alias gpl='git pull'
+alias gf='git fetch'
+alias gs='git stash'
+alias gr='git rebase'
+alias gt='git log --graph --oneline --all'
+
+alias t='tldr'
+alias mkdir='mkdir -p'
+alias mkidr='mkdir -p'
+alias dns8='networksetup -setdnsservers Ethernet\ Adaptor\ \(en2\) 8.8.8.8 8.8.4.4'
+alias dns='networksetup -setdnsservers "802.11n NIC" empty'
+alias dns114='networksetup -setdnsservers "802.11n NIC" 114.114.114.114'
+alias dnstx='networksetup -setdnsservers "802.11n NIC" 119.29.29.29'
+alias sshproxy="ssh -o 'ProxyCommand=nc -X 5 -x localhost:1086 %h %p'"
+
+alias vf='nvim $(fzf)'
+alias cdt='cd $(find * -type d | fzf)'
+alias gct='git checkout $(git branch -r | fzf)'
+
+alias cl='cloc . --exclude-dir=node_modules,.nuxt,build,.vscode,dist --exclude-lang=JSON'
+# alias end
+
+# fzf
+export FZF_DEFAULT_OPTS='--bind ctrl-e:down,ctrl-u:up --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500"'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore-dir=node_modules -g ""'
+export FZF_COMPLETION_TRIGGER='\'
+export FZF_TMUX_HEIGHT='80%'
+export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'
+
+
+export LSCOLORS=exfxcxdxbxexexxxxxxxxx
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+#eval $(thefuck --alias)
+# You can use whatever you want as an alias, like for Mondays:
+#eval $(thefuck --alias FUCK)
 
+PATH=$PATH:~/go/bin
 
 # Initialize command prompt
 #export PS1="%n@%m:%~%# "
@@ -55,7 +94,6 @@ _INIT_SH_NOFUN=1
 # WSL (aka Bash for Windows) doesn't work well with BG_NICE
 #[ -d "/mnt/c" ] && [[ "$(uname -a)" == *Microsoft* ]] && unsetopt BG_NICE
 
-# source ~/.antigen/bundles/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Initialize antigen
 source "$ANTIGEN"
 
@@ -65,31 +103,21 @@ antigen use oh-my-zsh
 
 # default bundles
 # visit https://github.com/unixorn/awesome-zsh-plugins
-# antigen bundle git
-# antigen bundle heroku
 antigen bundle pip
 antigen bundle svn-fast-info
-# antigen bundle command-not-find
 
 antigen bundle colorize
 antigen bundle github
 antigen bundle python
 antigen bundle rupa/z z.sh
-antigen bundle z
-
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
-# antigen bundle supercrabtree/k
-antigen bundle Vifon/deer
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle sobolevn/wakatime-zsh-plugin
 
 antigen bundle willghatch/zsh-cdr
-# antigen bundle zsh-users/zaw
-# command line左边想显示的内容
 
-
-antigen theme robbyrussell
-
-
+antigen theme xxf
 #syntax color definition
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -121,17 +149,12 @@ ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=009
 ZSH_HIGHLIGHT_STYLES[assign]=none
 
 # load local config
-[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
+[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh"
 [ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
-
-# enable syntax highlighting
-antigen bundle zsh-users/zsh-syntax-highlighting
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 antigen apply
 
-# setup for deer
-autoload -U deer
-zle -N deer
 
 # default keymap
 bindkey -s '\ee' 'vim\n'
@@ -152,8 +175,6 @@ bindkey '\e[1;3D' backward-word
 bindkey '\e[1;3C' forward-word
 bindkey '\e[1;3A' beginning-of-line
 bindkey '\e[1;3B' end-of-line
-
-bindkey '\ev' deer
 
 alias ll='ls -l'
 
@@ -182,4 +203,19 @@ setopt HIST_VERIFY # Don't execute immediately upon history expansion.
 zstyle ':completion:*:complete:-command-:*:*' ignored-patterns '*.pdf|*.exe|*.dll'
 zstyle ':completion:*:*sh:*:' tag-order files
 
+setopt nonomatch
 
+# Use beam shape cursor on startup.
+echo -ne '\e[5 q'
+
+# Use beam shape cursor for each new prompt.
+preexec() {
+  echo -ne '\e[5 q'
+}
+
+_fix_cursor() {
+  echo -ne '\e[5 q'
+}
+precmd_functions+=(_fix_cursor)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
