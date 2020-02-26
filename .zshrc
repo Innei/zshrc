@@ -57,7 +57,14 @@ alias cdt='cd $(find * -type d | fzf)'
 alias gct='git checkout $(git branch -r | fzf)'
 
 alias cl='cloc . --exclude-dir=node_modules,.nuxt,build,.vscode,dist --exclude-lang=JSON'
+
+alias r='ranger'
+alias q='exit'
+alias c='clear'
+# alias python='python3'
 # alias end
+
+VISUAL=nvim; export VISUAL EDITOR=nvim; export EDITOR
 
 # fzf
 export FZF_DEFAULT_OPTS='--bind ctrl-e:down,ctrl-u:up --preview "[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (ccat --color=always {} || highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500"'
@@ -75,7 +82,7 @@ export LANG=en_US.UTF-8
 # You can use whatever you want as an alias, like for Mondays:
 #eval $(thefuck --alias FUCK)
 
-PATH=$PATH:~/go/bin
+PATH=$PATH:~/go/bin:~/library/Python/3.7/bin:~/.local/bin
 
 # Initialize command prompt
 #export PS1="%n@%m:%~%# "
@@ -157,7 +164,7 @@ antigen apply
 
 
 # default keymap
-bindkey -s '\ee' 'vim\n'
+bindkey -s '\ee' 'nvim\n'
 bindkey '\eh' backward-char
 bindkey '\el' forward-char
 bindkey '\ej' down-line-or-history
@@ -165,8 +172,8 @@ bindkey '\ek' up-line-or-history
 # bindkey '\eu' undo
 bindkey '\eH' backward-word
 bindkey '\eL' forward-word
-bindkey '\eJ' beginning-of-line
-bindkey '\eK' end-of-line
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
 
 bindkey -s '\eo' 'cd ..\n'
 bindkey -s '\e;' 'll\n'
