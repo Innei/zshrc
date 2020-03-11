@@ -1,19 +1,31 @@
 # Antigen: https://github.com/zsh-users/antigen
-
-FILEPATH=$(cd "$(dirname "$0")"; pwd)
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
-# cp "$FILEPATH/mac.zshrc" "$HOME/.zshrc"
-# echo "$FILEPATH/mac.zshrc"
+# Install antigen.zsh if not exist
 if [ ! -f "$ANTIGEN" ]; then
+  echo "Installing antigen ... please connect the proxy"
+  #export all_proxy=socks5://127.0.0.1:1086
   [ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
   [ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin" 2> /dev/null
   [ ! -f "$HOME/.z" ] && touch "$HOME/.z"
-  cp "$FILEPATH/antigen.zsh" "$ANTIGEN"
+  URL="http://git.io/antigen"
+  TMPFILE="/tmp/antigen.zsh"
+  if [ -x "$(which curl)" ]; then
+    curl -L "$URL" -o "$TMPFILE"
+  elif [ -x "$(which wget)" ]; then
+    wget "$URL" -O "$TMPFILE"
+  else
+    echo "ERROR: please install curl or wget before installation !!"
+    exit
+  fi
+  if [ ! $? -eq 0 ]; then
+    echo ""
+    echo "ERROR: downloading antigen.zsh ($URL) failed !!"
+    exit
+  fi;
+  echo "move $TMPFILE to $ANTIGEN"
+  mv "$TMPFILE" "$ANTIGEN"
 fi
-
-source "$ANTIGEN"
-
 
 # alias begin
 alias c='clear'
@@ -49,6 +61,7 @@ alias cl='cloc . --exclude-dir=node_modules,.nuxt,build,.vscode,dist --exclude-l
 alias r='ranger'
 alias q='exit'
 alias c='clear'
+alias ll='ls -l'
 # alias python='python3'
 # alias end
 
@@ -65,12 +78,7 @@ export FZF_PREVIEW_COMMAND='[[ $(file --mime {}) =~ binary ]] && echo {} is a bi
 export LSCOLORS=exfxcxdxbxexexxxxxxxxx
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-#eval $(thefuck --alias)
-# You can use whatever you want as an alias, like for Mondays:
-#eval $(thefuck --alias FUCK)
-
-PATH=$PATH:~/go/bin:~/library/Python/3.7/bin:~/.local/bin
+export LANGUAGE=en_US
 
 # Initialize command prompt
 #export PS1="%n@%m:%~%# "
@@ -108,7 +116,7 @@ antigen bundle rupa/z z.sh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
-# antigen bundle sobolevn/wakatime-zsh-plugin
+antigen bundle sobolevn/wakatime-zsh-plugin
 
 antigen bundle willghatch/zsh-cdr
 
@@ -147,6 +155,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=none
 [ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh"
 [ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+[ -f "$HOME/.config/zsh/zshrc" ] && source "$HOME/.config/zsh/zshrc"
 
 antigen apply
 
@@ -171,9 +180,6 @@ bindkey '\e[1;3C' forward-word
 bindkey '\e[1;3A' beginning-of-line
 bindkey '\e[1;3B' end-of-line
 
-alias ll='ls -l'
-
-
 # options
 unsetopt correct_all
 
@@ -189,10 +195,14 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY # Don't execute immediately upon history expansion.
 
-
-# source function.sh if it exists
-[ -f "$HOME/.local/etc/function.sh" ] && . "$HOME/.local/etc/function.sh"
-
+# less highlight for man page
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # ignore complition
 zstyle ':completion:*:complete:-command-:*:*' ignored-patterns '*.pdf|*.exe|*.dll'
@@ -214,3 +224,6 @@ _fix_cursor() {
 precmd_functions+=(_fix_cursor)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:~/go/bin:~/library/Python/3.7/bin:~/.local/bin:$PATH"
+export python=python3
