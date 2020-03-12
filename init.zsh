@@ -2,7 +2,7 @@
 FILEPATH=$(cd "$(dirname "$0")"; pwd)
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
-cp "$FILEPATH/mac.zshrc" "$HOME/.zshrc"
+cp "$FILEPATH/.zshrc" "$HOME/.zshrc"
 # echo "$FILEPATH/mac.zshrc"
 if [ ! -f "$ANTIGEN" ]; then
 	[ ! -d "$HOME/.local" ] && mkdir -p "$HOME/.local" 2> /dev/null
